@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Firebase;
 using Firebase.Database;
 using Firebase.Extensions;
+using Firebase.Storage;
 using UnityEngine;
 
 namespace Managers
@@ -10,6 +11,8 @@ namespace Managers
     public class FirebaseDataManager : MonoBehaviour
     {
         private DatabaseReference databaseReference;
+        private FirebaseStorage storage;
+        private StorageReference storageReference;
         private bool isFirebaseInitialized = false;
 
         public event Action OnFirebaseInitialized;
@@ -27,6 +30,8 @@ namespace Managers
                 {
                     FirebaseApp app = FirebaseApp.DefaultInstance;
                     databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
+                    storage = FirebaseStorage.DefaultInstance;
+                    storageReference = storage.RootReference;
                     isFirebaseInitialized = true;
                     Debug.Log("Firebase initialized successfully.");
 
@@ -58,8 +63,8 @@ namespace Managers
             {
                 string name = characterData.Child("CharacterName").Value.ToString();
                 int health = int.Parse(characterData.Child("CharacterHealth").Value.ToString());
-
-                return new Character(name, health);
+                string imageUrl = characterData.Child("CharacterImageURL").Value.ToString();
+                return new Character(name, health, imageUrl);
             }
             else
             {
@@ -74,11 +79,14 @@ namespace Managers
     {
         public string Name;
         public int Health;
+        public string ImageUrl;
 
-        public Character(string name, int health)
+        public Character(string name, int health, string imageUrl)
         {
             Name = name;
             Health = health;
+            ImageUrl = imageUrl;
         }
     }
+
 }
