@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "115245480334",
+    "firebase_url": "https://celestial-skirmish-7339e-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "celestial-skirmish-7339e",
+    "storage_bucket": "celestial-skirmish-7339e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115245480334:android:795d08d7c3ddb61d71ccdf",
+        "android_client_info": {
+          "package_name": "com.vobytech.CelestialSkirmish"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBG4D7KCcDY_hfAurmaAlWyZ0k6qR1lA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
