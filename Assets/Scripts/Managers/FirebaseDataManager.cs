@@ -88,5 +88,4 @@ namespace Managers
             ImageUrl = imageUrl;
         }
     }
-
 }

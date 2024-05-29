@@ -1,33 +1,40 @@
 ﻿using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.UI;
+using Zenject;
 
 namespace Managers
 {
     public class GameManager : MonoBehaviour
     {
-        public FirebaseDataManager firebaseDatabaseManager;
-        public Image characterUIImage; // UI Image bileşeni
+        private FirebaseDataManager _firebaseDataManager;
+        private UIManager _uiManager;
         private string characterID = "Character001";
         private Sprite characterSprite;
-        public UIManager uiManager;
+
+        [Inject]
+        public void Construct(FirebaseDataManager firebaseDataManager, UIManager uiManager)
+        {
+            _firebaseDataManager = firebaseDataManager;
+            _uiManager = uiManager;
+        }
+
         async void Start()
         {
             // Firebase'in başlatılmasını bekle
-            firebaseDatabaseManager.OnFirebaseInitialized += HandleFirebaseInitialized;
+            _firebaseDataManager.OnFirebaseInitialized += HandleFirebaseInitialized;
         }
 
         private async void HandleFirebaseInitialized()
         {
-            Character character = await firebaseDatabaseManager.GetCharacterDataAsync(characterID);
+            Character character = await _firebaseDataManager.GetCharacterDataAsync(characterID);
             if (character != null)
             {
                 Debug.Log($"Character Name: {character.Name}, Health: {character.Health}, Image URL: {character.ImageUrl}");
                 characterSprite = await LoadImageFromURL(character.ImageUrl);
                 if (characterSprite != null)
                 {
-                    uiManager.SetFirstSelectedHero(characterSprite,character.Name,character.Health.ToString());
+                    _uiManager.SetFirstSelectedHero(characterSprite, character.Name, character.Health.ToString());
                 }
             }
         }
